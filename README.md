@@ -15,7 +15,7 @@ API
 
 	fileChooser.open(successCallback, failureCallback);
 
-The success callback get the uri of the selected file
+The success callback get the uri of the selected file as "file:///"
 
 	fileChooser.open(function(uri) {
 		alert(uri);
@@ -25,4 +25,3 @@ Screenshot
 
 ![Screenshot](filechooser.png "Screenshot")
 
-TODO rename `open` to pick, select, or choose.
