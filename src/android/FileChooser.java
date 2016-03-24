@@ -4,6 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.database.Cursor;
+import android.provider.MediaStore;
+import android.content.Context;
+
+
+import java.io.File;
 
 import org.apache.cordova.CordovaArgs;
 import org.apache.cordova.CallbackContext;
@@ -55,11 +61,16 @@ public class FileChooser extends CordovaPlugin {
             if (resultCode == Activity.RESULT_OK) {
 
                 Uri uri = data.getData();
-
+                                                                
                 if (uri != null) {
-
-                    Log.w(TAG, uri.toString());
-                    callback.success(uri.toString());
+                        
+                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                    Cursor cursor = this.cordova.getActivity().getApplicationContext().getContentResolver().query(uri, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String filePath = cursor.getString(columnIndex);
+                    cursor.close();            
+                    callback.success(filePath);
 
                 } else {
 
